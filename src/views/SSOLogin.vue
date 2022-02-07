@@ -4,6 +4,7 @@
     :onSuccess="onSuccess"
     :contextName="contextName"
     :logo="logo"
+    loginText="Verida Vue Starter Kit"
   />
 </template>
 
