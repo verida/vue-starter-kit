@@ -17,4 +17,3 @@ export default defineComponent({
   methods: {},
 });
 </script>
-
