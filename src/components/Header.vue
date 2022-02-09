@@ -1,7 +1,12 @@
 <template>
   <header class="header">
     <div><img src="../assets/images/verida_logo.svg" alt="logo" /></div>
-    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
+    <vda-account
+      :logo="logo"
+      :contextName="contextName"
+      :onLogout="onLogout"
+      :onError="onError"
+    />
   </header>
 </template>
 
