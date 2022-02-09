@@ -7,19 +7,24 @@
 
 <script>
 import { defineComponent } from "vue";
-import { CONTEXT_NAME, LOGO } from "@/constant";
+
+const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
 export default defineComponent({
   name: "Header",
   data() {
     return {
-      contextName: CONTEXT_NAME,
-      logo: LOGO,
+      contextName: VUE_APP_CONTEXT_NAME,
+      logo: VUE_APP_LOGO,
+      error: null,
     };
   },
   methods: {
     async onLogout() {
       this.$router.push({ name: "Connect" });
+    },
+    onError(error) {
+      this.error = error;
     },
   },
 });
