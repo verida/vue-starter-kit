@@ -1,7 +1,8 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import Credential from "../views/Home.vue";
 import store from "store";
-import { CONTEXT_NAME } from "@/constant";
+
+const { VUE_APP_CONTEXT_NAME } = process.env;
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -27,7 +28,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const profileFromStore = store.get(CONTEXT_NAME);
+    const profileFromStore = store.get(VUE_APP_CONTEXT_NAME);
     if (profileFromStore) {
       next();
     } else {

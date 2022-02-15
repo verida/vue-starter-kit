@@ -1,25 +1,35 @@
 <template>
   <header class="header">
     <div><img src="../assets/images/verida_logo.svg" alt="logo" /></div>
-    <vda-account :logo="logo" :contextName="contextName" :onLogout="onLogout" />
+    <vda-account
+      :logo="logo"
+      :contextName="contextName"
+      :onLogout="onLogout"
+      :onError="onError"
+    />
   </header>
 </template>
 
 <script>
 import { defineComponent } from "vue";
-import { CONTEXT_NAME, LOGO } from "@/constant";
+
+const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
 export default defineComponent({
   name: "Header",
   data() {
     return {
-      contextName: CONTEXT_NAME,
-      logo: LOGO,
+      contextName: VUE_APP_CONTEXT_NAME,
+      logo: VUE_APP_LOGO,
+      error: null,
     };
   },
   methods: {
     async onLogout() {
       this.$router.push({ name: "Connect" });
+    },
+    onError(error) {
+      this.error = error;
     },
   },
 });
