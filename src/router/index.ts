@@ -28,8 +28,8 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    const profileFromStore = store.get(VUE_APP_CONTEXT_NAME);
-    if (profileFromStore) {
+    const isConnected = store.get(VUE_APP_CONTEXT_NAME);
+    if (isConnected) {
       next();
     } else {
       next("/connect");

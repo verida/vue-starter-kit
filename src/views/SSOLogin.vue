@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import store from "store";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO, VUE_APP_LOGIN_TEXT } = process.env;
 
@@ -28,7 +29,12 @@ export default defineComponent({
   },
   methods: {
     onSuccess(context: any) {
+      //save login status in Local-storage
+
+      store.set(VUE_APP_CONTEXT_NAME, true);
+
       console.log("App context", context);
+
       this.$router.push({ name: "Home" });
     },
     onError(error: Error) {
