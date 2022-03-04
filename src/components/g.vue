@@ -12,6 +12,7 @@
 
 <script>
 import { defineComponent } from "vue";
+import store from "store";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
@@ -26,6 +27,7 @@ export default defineComponent({
   },
   methods: {
     async onLogout() {
+      store.remove(VUE_APP_CONTEXT_NAME);
       this.$router.push({ name: "Connect" });
     },
     onError(error) {
