@@ -28,6 +28,7 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
+    // if the user is connected, local storage will have the contet name stored
     const isConnected = store.get(VUE_APP_CONTEXT_NAME);
     if (isConnected) {
       next();
