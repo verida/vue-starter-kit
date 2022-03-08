@@ -11,6 +11,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import store from "store";
+import * as verida from "@verida/client-ts/";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO, VUE_APP_LOGIN_TEXT } = process.env;
 
@@ -28,13 +29,14 @@ export default defineComponent({
     };
   },
   methods: {
-    onSuccess(context: any) {
-      //save login status in Local-storage
+    onSuccess(context: verida.Context) {
+      // user has successfully logged in
 
+      //save login status in Local-storage
+      // This is checked in /router/index.ts
       store.set(VUE_APP_CONTEXT_NAME, true);
 
-      console.log("App context", context);
-
+      // Forward to the home page
       this.$router.push({ name: "Home" });
     },
     onError(error: Error) {
