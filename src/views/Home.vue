@@ -20,7 +20,7 @@
 import { defineComponent } from "vue";
 import AppHeader from "@/components/Header.vue";
 import * as verida from "@verida/client-ts/";
-import * as verida_account from "@verida/account"
+import * as veridaAccountModule from "@verida/account"
 
 export default defineComponent({
   name: "Home",
@@ -29,7 +29,7 @@ export default defineComponent({
   },
   data(): {
     veridaContext: null | verida.Context,
-    veridaAccount: null | verida_account.Account,
+    veridaAccount: null | veridaAccountModule.Account,
     DID:  null | string | undefined,
     contextName: null | string | undefined,
   } {
