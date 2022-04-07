@@ -1752,7 +1752,6 @@
   dependencies:
     "@typescript-eslint/types" "4.33.0"
     eslint-visitor-keys "^2.0.0"
-
 "@verida/account-node@^1.1.9":
   version "1.1.9"
   resolved "https://registry.yarnpkg.com/@verida/account-node/-/account-node-1.1.9.tgz#52247eccb5341165c0ed0139be75adb71cb75ef3"
@@ -1811,7 +1810,6 @@
     pouchdb "^7.2.2"
     pouchdb-find "^7.2.2"
     uuid "^8.3.2"
-
 "@verida/did-client@^0.1.8":
   version "0.1.8"
   resolved "https://registry.yarnpkg.com/@verida/did-client/-/did-client-0.1.8.tgz#fd53fdea98e6eea1331de6bdfab34fb0ec09b391"
@@ -1848,7 +1846,6 @@
     ethers "^5.5.1"
     tweetnacl "^1.0.3"
     uuid "^8.3.2"
-
 "@verida/storage-link@^1.1.8":
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/@verida/storage-link/-/storage-link-1.1.8.tgz#58b9b127bb6b846bd556ef7567c6931b10d64516"
@@ -1864,6 +1861,7 @@
   version "0.1.22"
   resolved "https://registry.yarnpkg.com/@verida/vue-account/-/vue-account-0.1.22.tgz#f12e220e8ef2c83992a0fa22676bd325bcf67da3"
   integrity sha512-maDau7oAEmxSn8tR7XQUeChOk6ZmrAOjywsKvhFcH/mWDZWLQsaEijGFC4BTADikYzXyiTJghUDHlDPplpESag==
+
   dependencies:
     "@verida/account-web-vault" "^1.1.9"
     "@verida/client-ts" "^1.1.12"
@@ -10357,9 +10355,9 @@ url-loader@^2.2.0:
     schema-utils "^2.5.0"
 
 url-parse@^1.4.3, url-parse@^1.5.3:
-  version "1.5.4"
-  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.4.tgz#e4f645a7e2a0852cc8a66b14b292a3e9a11a97fd"
-  integrity sha512-ITeAByWWoqutFClc/lRZnFplgXgEZr3WJ6XngMM/N9DMIm4K8zXPCZ1Jdu0rERwO84w1WC5wkle2ubwTA4NTBg==
+  version "1.5.10"
+  resolved "https://registry.yarnpkg.com/url-parse/-/url-parse-1.5.10.tgz#9d3c2f736c1d75dd3bd2be507dcc111f1e2ea9c1"
+  integrity sha512-WypcfiRhfeUP9vvF0j6rw0J3hrWrw6iZv3+22h6iRMJ/8z1Tj6XfLP4DsUix5MhMPnXpiHDoKyoZ/bdCkwBCiQ==
   dependencies:
     querystringify "^2.1.1"
     requires-port "^1.0.0"

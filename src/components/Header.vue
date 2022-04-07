@@ -6,12 +6,15 @@
       :contextName="contextName"
       :onLogout="onLogout"
       :onError="onError"
+      :onSuccess="onSuccess"
     />
   </header>
 </template>
 
-<script>
+<script lang="ts">
 import { defineComponent } from "vue";
+import store from "store";
+import * as verida from "@verida/client-ts/";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
@@ -26,12 +29,18 @@ export default defineComponent({
   },
   methods: {
     async onLogout() {
+      store.remove(VUE_APP_CONTEXT_NAME);
       this.$router.push({ name: "Connect" });
     },
-    onError(error) {
+    onError(error: any) {
       this.error = error;
     },
+    onSuccess(veridaContext: verida.Context) {
+      // emit the event for the parent component to use
+      this.$emit("veridaContextSet", veridaContext)
+    }
   },
+  emits: ["veridaContextSet"]
 });
 </script>
 
