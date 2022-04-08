@@ -1,6 +1,6 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
+import { hasSession } from "@verida/account-web-vault";
 import Credential from "../views/Home.vue";
-import store from "store";
 
 const { VUE_APP_CONTEXT_NAME } = process.env;
 
@@ -26,11 +26,9 @@ const router = createRouter({
   routes,
 });
 
-router.beforeEach((to, from, next) => {
+router.beforeEach((to, _, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    // if the user is connected, local storage will have the context name stored
-    const isConnected = store.get(VUE_APP_CONTEXT_NAME);
-    if (isConnected) {
+    if (hasSession(VUE_APP_CONTEXT_NAME)) {
       next();
     } else {
       next("/connect");
