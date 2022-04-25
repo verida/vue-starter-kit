@@ -1,19 +1,25 @@
 <template>
   <app-header @veridaContextSet="onVeridaContextSet" />
   <div style="text-align: center">
-    <h1>{{contextName}}: Home Page</h1>
-    
+    <h1>{{ contextName }}: Home Page</h1>
 
     <div>
-      This <a href="https://developers.verida.io/docs/concepts/application-contexts">application context</a> is called: <i>{{contextName}}</i>. 
-      Change this by editing the value of VUE_APP_CONTEXT_NAME in the .env file included in this project. 
+      <button @click="issue">Show problem</button>
+      open console to view issue
     </div>
 
     <div>
-      You logged in with DID {{DID}}
+      This
+      <a href="https://developers.verida.io/docs/concepts/application-contexts"
+        >application context</a
+      >
+      is called: <i>{{ contextName }}</i
+      >. Change this by editing the value of VUE_APP_CONTEXT_NAME in the .env
+      file included in this project.
     </div>
-</div>
 
+    <div>You logged in with DID {{ DID }}</div>
+  </div>
 </template>
 
 <script lang="ts">
@@ -48,7 +54,7 @@ export default defineComponent({
         console.log("Verida Context:")
         console.log(veridaContext)
 
-        // we have the veridaContext. 
+        // we have the veridaContext.
         this.veridaContext = await veridaContext;
 
         // this is a Verida Account object
@@ -64,6 +70,17 @@ export default defineComponent({
         this.DID = null;
       }
     },
-  },
+    async issue() {
+      console.log("issuing");
+      if (this.veridaContext) {
+
+        console.log("getting messaging");
+        const messaging = await this.veridaContext.getMessaging();
+
+        console.log("we have messaging");
+
+      }
+    },
+  }
 });
 </script>
