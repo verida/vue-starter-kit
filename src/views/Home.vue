@@ -26,7 +26,7 @@
 import { defineComponent } from "vue";
 import AppHeader from "@/components/Header.vue";
 import * as verida from "@verida/client-ts/";
-import * as veridaAccountModule from "@verida/account"
+import * as veridaAccountModule from "@verida/account";
 
 export default defineComponent({
   name: "Home",
@@ -34,10 +34,10 @@ export default defineComponent({
     AppHeader,
   },
   data(): {
-    veridaContext: null | verida.Context,
-    veridaAccount: null | veridaAccountModule.Account,
-    DID:  null | string | undefined,
-    contextName: null | string | undefined,
+    veridaContext: null | verida.Context;
+    veridaAccount: null | veridaAccountModule.Account;
+    DID: null | string | undefined;
+    contextName: null | string | undefined;
   } {
     return {
       veridaContext: null,
@@ -49,13 +49,13 @@ export default defineComponent({
   methods: {
     async onVeridaContextSet(veridaContext: any) {
       if (veridaContext != null) {
-
         // You are free to delete this logging
-        console.log("Verida Context:")
-        console.log(veridaContext)
+        console.log("Verida Context:");
+
+        // console.log(veridaContext);
 
         // we have the veridaContext.
-        this.veridaContext = await veridaContext;
+        this.veridaContext = veridaContext;
 
         // this is a Verida Account object
         this.veridaAccount = await veridaContext.account;
@@ -63,7 +63,7 @@ export default defineComponent({
         // and this is how we get the DID
         this.DID = await this.veridaAccount?.did();
 
-        this.contextName = await this.veridaContext?.getContextName()
+        this.contextName = await this.veridaContext?.getContextName();
       } else {
         this.veridaContext = null;
         this.veridaAccount = null;
@@ -73,14 +73,13 @@ export default defineComponent({
     async issue() {
       console.log("issuing");
       if (this.veridaContext) {
-
         console.log("getting messaging");
+
         const messaging = await this.veridaContext.getMessaging();
 
-        console.log("we have messaging");
-
+        console.log("we have messaging", messaging);
       }
     },
-  }
+  },
 });
 </script>
