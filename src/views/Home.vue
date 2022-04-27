@@ -20,7 +20,7 @@
 import { defineComponent } from "vue";
 import AppHeader from "@/components/Header.vue";
 import * as verida from "@verida/client-ts/";
-import * as veridaAccountModule from "@verida/account"
+import * as veridaAccountModule from "@verida/account";
 
 export default defineComponent({
   name: "Home",
@@ -28,10 +28,10 @@ export default defineComponent({
     AppHeader,
   },
   data(): {
-    veridaContext: null | verida.Context,
-    veridaAccount: null | veridaAccountModule.Account,
-    DID:  null | string | undefined,
-    contextName: null | string | undefined,
+    veridaContext: null | verida.Context;
+    veridaAccount: null | veridaAccountModule.Account;
+    DID:  null | string | undefined;
+    contextName: null | string | undefined;
   } {
     return {
       veridaContext: null,
@@ -49,7 +49,7 @@ export default defineComponent({
         console.log(veridaContext)
 
         // we have the veridaContext. 
-        this.veridaContext = await veridaContext;
+        this.veridaContext = veridaContext;
 
         // this is a Verida Account object
         this.veridaAccount = await veridaContext.account;
@@ -57,7 +57,7 @@ export default defineComponent({
         // and this is how we get the DID
         this.DID = await this.veridaAccount?.did();
 
-        this.contextName = await this.veridaContext?.getContextName()
+        this.contextName = await this.veridaContext?.getContextName();
       } else {
         this.veridaContext = null;
         this.veridaAccount = null;
