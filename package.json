@@ -5,6 +5,9 @@
 	"engines": {
 		"node": "^14.0.0"
 	},
+	"resolutions": {
+		"acorn": "8.0.1"
+	},
 	"scripts": {
 		"serve": "vue-cli-service serve",
 		"build": "vue-cli-service build",
