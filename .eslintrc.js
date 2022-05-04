@@ -19,6 +19,6 @@ module.exports = {
 		'@typescript-eslint/no-explicit-any': 'off',
 		'@typescript-eslint/no-this-alias': 'off',
 		'@typescript-eslint/ban-ts-ignore': 'off',
-		'@typescript-eslint/ban-ts-comment': 'on',
+		'@typescript-eslint/ban-ts-comment': 1,
 	},
 };

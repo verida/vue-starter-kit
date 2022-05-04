@@ -86,11 +86,12 @@ export default defineComponent({
     async issue() {
       if (this.veridaContext) {
         try {
+          console.log("about to get messaging");
           this.isLoading = true;
           const messaging = await this.veridaContext.getMessaging();
           console.log("we have messaging", messaging);
         } catch (error) {
-          console.log({ error });
+          console.error(error);
         } finally {
           this.isLoading = false;
         }
