@@ -1,12 +1,12 @@
 <template>
-  <app-header @veridaContextSet="onVeridaContextSet" />
+  <app-header />
   <div style="text-align: center">
     <h1>{{ contextName }}: Home Page</h1>
 
-    <div>
-      <button @click="issue">Show problem</button>
-      open console to view issue
-    </div>
+    <button @click="issue" :disabled="isLoading">
+      {{ isLoading ? "Loading..." : "Show problem" }}
+    </button>
+    <span>open console to view issue</span>
 
     <div>
       This
@@ -28,6 +28,12 @@ import AppHeader from "@/components/Header.vue";
 import * as verida from "@verida/client-ts/";
 import * as veridaAccountModule from "@verida/account";
 
+declare module "@vue/runtime-core" {
+  interface ComponentCustomProperties {
+    $VeridaHelper: any;
+  }
+}
+
 export default defineComponent({
   name: "Home",
   components: {
@@ -38,13 +44,20 @@ export default defineComponent({
     veridaAccount: null | veridaAccountModule.Account;
     DID: null | string | undefined;
     contextName: null | string | undefined;
+    isLoading: boolean;
   } {
     return {
       veridaContext: null,
       veridaAccount: null,
       DID: null,
       contextName: null,
+      isLoading: false,
     };
+  },
+  async created() {
+    this.$VeridaHelper.on("connected", async () => {
+      this.onVeridaContextSet(this.$VeridaHelper.context);
+    });
   },
   methods: {
     async onVeridaContextSet(veridaContext: any) {
@@ -63,7 +76,7 @@ export default defineComponent({
         // and this is how we get the DID
         this.DID = await this.veridaAccount?.did();
 
-        this.contextName = await this.veridaContext?.getContextName();
+        this.contextName = this.veridaContext?.getContextName();
       } else {
         this.veridaContext = null;
         this.veridaAccount = null;
@@ -71,13 +84,16 @@ export default defineComponent({
       }
     },
     async issue() {
-      console.log("issuing");
       if (this.veridaContext) {
-        console.log("getting messaging");
-
-        const messaging = await this.veridaContext.getMessaging();
-
-        console.log("we have messaging", messaging);
+        try {
+          this.isLoading = true;
+          const messaging = await this.veridaContext.getMessaging();
+          console.log("we have messaging", messaging);
+        } catch (error) {
+          console.log({ error });
+        } finally {
+          this.isLoading = false;
+        }
       }
     },
   },

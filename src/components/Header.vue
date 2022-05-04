@@ -6,7 +6,6 @@
       :contextName="contextName"
       :onLogout="onLogout"
       :onError="onError"
-      :onSuccess="onSuccess"
     />
   </header>
 </template>
@@ -35,12 +34,12 @@ export default defineComponent({
     onError(error: any) {
       this.error = error;
     },
-    onSuccess(veridaContext: verida.Context) {
-      // emit the event for the parent component to use
-      this.$emit("veridaContextSet", veridaContext);
-    },
+    // onSuccess(veridaContext: verida.Context) {
+    //   // emit the event for the parent component to use
+    //   this.$emit("veridaContextSet", veridaContext);
+    // },
   },
-  emits: ["veridaContextSet"],
+  // emits: ["veridaContextSet"],
 });
 </script>
 
