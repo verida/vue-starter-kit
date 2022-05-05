@@ -23,7 +23,7 @@
 </template>
 
 <script lang="ts">
-import { defineComponent } from "vue";
+import { defineComponent, toRaw } from "vue";
 import AppHeader from "@/components/Header.vue";
 import * as verida from "@verida/client-ts";
 import * as veridaAccountModule from "@verida/account";
@@ -39,16 +39,16 @@ export default defineComponent({
   components: {
     AppHeader,
   },
+  mounted() {
+    this.$options.veridaContext = null as null | verida.Context;
+    this.$options.veridaAccount = null as null | veridaAccountModule.Account;
+  },
   data(): {
-    veridaContext: null | verida.Context
-    veridaAccount: null | veridaAccountModule.Account;
     DID: null | string | undefined;
     contextName: null | string | undefined;
     isLoading: boolean;
   } {
     return {
-      veridaContext: null,
-      veridaAccount: null,
       DID: null,
       contextName: null,
       isLoading: false,
@@ -64,34 +64,39 @@ export default defineComponent({
       if (vContext != null) {
         // You are free to delete this logging
 
-        // we have the veridaContext.
-        this.veridaContext = vContext;
+        // we have the veridaContext.        
+        this.$options.veridaContext = vContext;
 
         console.log("Verida Context:");
 
-        console.log(this.veridaContext);
+        console.log(this.$options.veridaContext);
       
         // this is a Verida Account object
-        this.veridaAccount = this.veridaContext.getAccount();
+        this.$options.veridaAccount = this.$options.veridaContext.getAccount();
 
-        console.log(this.veridaAccount )
+        console.log(this.$options.veridaAccount )
 
         // and this is how we get the DID
-        this.DID = await this.veridaAccount?.did();
+        this.DID = await this.$options.veridaAccount?.did();
 
-        this.contextName = this.veridaContext?.getContextName();
+        this.contextName = this.$options.veridaContext?.getContextName();
       } else {
-        this.veridaContext = null;
-        this.veridaAccount = null;
+        this.$options.veridaContext = null;
+        this.$options.veridaAccount = null;
         this.DID = null;
       }
     },
     async issue() {
-      if (this.veridaContext) {
+      if (this.$options.veridaContext) {
         try {
+          console.log(this.$options.veridaContext);
+          
+          //let vCtx = toRaw(this.veridaContext);
+
           console.log("about to get messaging");
           this.isLoading = true;
-          const messaging = await this.veridaContext.getMessaging();
+          const messaging = await this.$options.veridaContext.getMessaging();
+          //const messaging = await vCtx.getMessaging();
           console.log("we have messaging", messaging);
         } catch (error) {
           console.error(error);
