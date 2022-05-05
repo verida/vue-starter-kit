@@ -25,7 +25,7 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import AppHeader from "@/components/Header.vue";
-import * as verida from "@verida/client-ts/";
+import * as verida from "@verida/client-ts";
 import * as veridaAccountModule from "@verida/account";
 
 declare module "@vue/runtime-core" {
@@ -40,7 +40,7 @@ export default defineComponent({
     AppHeader,
   },
   data(): {
-    veridaContext: null | verida.Context;
+    veridaContext: null | verida.Context
     veridaAccount: null | veridaAccountModule.Account;
     DID: null | string | undefined;
     contextName: null | string | undefined;
@@ -60,18 +60,21 @@ export default defineComponent({
     });
   },
   methods: {
-    async onVeridaContextSet(veridaContext: any) {
-      if (veridaContext != null) {
+    async onVeridaContextSet(vContext: verida.Context) {
+      if (vContext != null) {
         // You are free to delete this logging
-        console.log("Verida Context:");
-
-        // console.log(veridaContext);
 
         // we have the veridaContext.
-        this.veridaContext = veridaContext;
+        this.veridaContext = vContext;
 
+        console.log("Verida Context:");
+
+        console.log(this.veridaContext);
+      
         // this is a Verida Account object
-        this.veridaAccount = await veridaContext.account;
+        this.veridaAccount = this.veridaContext.getAccount();
+
+        console.log(this.veridaAccount )
 
         // and this is how we get the DID
         this.DID = await this.veridaAccount?.did();
