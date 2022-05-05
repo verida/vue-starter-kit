@@ -4,9 +4,9 @@
     <vda-account
       :logo="logo"
       :contextName="contextName"
-      :onLogout="onLogout"
-      :onError="onError"
-      :onSuccess="onSuccess"
+      @onLogout="onLogout"
+      @onError="onError"
+      @onConnected="onSuccess"
     />
   </header>
 </template>
@@ -37,10 +37,10 @@ export default defineComponent({
     },
     onSuccess(veridaContext: verida.Context) {
       // emit the event for the parent component to use
-      this.$emit("veridaContextSet", veridaContext)
-    }
+      this.$emit("veridaContextSet", veridaContext);
+    },
   },
-  emits: ["veridaContextSet"]
+  emits: ["veridaContextSet"],
 });
 </script>
 
