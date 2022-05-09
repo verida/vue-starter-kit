@@ -1,5 +1,5 @@
 <template>
-  <app-header @veridaContextSet="onVeridaContextSet" />
+  <app-header @setDid="setDid" />
   <div style="text-align: center">
     <h1>{{ contextName }}: Home Page</h1>
 
@@ -13,15 +13,16 @@
       file included in this project.
     </div>
 
-    <div>You logged in with DID {{ DID }}</div>
+    <div>You logged in with DID {{ did }}</div>
   </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
 import AppHeader from "@/components/Header.vue";
-import * as verida from "@verida/client-ts/";
-import * as veridaAccountModule from "@verida/account";
+import VeridaClient from "@/helpers/VeridaClient";
+
+const { VUE_APP_CONTEXT_NAME } = process.env;
 
 export default defineComponent({
   name: "Home",
@@ -29,40 +30,17 @@ export default defineComponent({
     AppHeader,
   },
   data(): {
-    veridaContext: null | verida.Context;
-    veridaAccount: null | veridaAccountModule.Account;
-    DID: null | string | undefined;
-    contextName: null | string | undefined;
+    did: string;
+    contextName: string;
   } {
     return {
-      veridaContext: null,
-      veridaAccount: null,
-      DID: null,
-      contextName: null,
+      did: VeridaClient.did,
+      contextName: VUE_APP_CONTEXT_NAME,
     };
   },
   methods: {
-    async onVeridaContextSet(veridaContext: any) {
-      if (veridaContext != null) {
-        // You are free to delete this logging
-        console.log("Verida Context:");
-        console.log(veridaContext);
-
-        // we have the veridaContext.
-        this.veridaContext = veridaContext;
-
-        // this is a Verida Account object
-        this.veridaAccount = await veridaContext.account;
-
-        // and this is how we get the DID
-        this.DID = await this.veridaAccount?.did();
-
-        this.contextName = await this.veridaContext?.getContextName();
-      } else {
-        this.veridaContext = null;
-        this.veridaAccount = null;
-        this.DID = null;
-      }
+    setDid(did: string) {
+      this.did = did;
     },
   },
 });
