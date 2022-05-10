@@ -20,17 +20,14 @@
 <script lang="ts">
 import { defineComponent } from "vue";
 import { Context } from "@verida/client-ts";
-import { mapState } from "vuex";
 import { Account } from "@verida/account";
 import AppHeader from "@/components/Header.vue";
 
 // const { VUE_APP_CONTEXT_NAME } = process.env;
 
 interface IData {
-  veridaContext: Context | null;
   did: string;
   contextName: string | undefined;
-  veridaAccount: Account | null;
 }
 
 export default defineComponent({
@@ -38,20 +35,17 @@ export default defineComponent({
   components: {
     AppHeader,
   },
-  computed: mapState(["veridaContext"]),
   mounted() {
     this.$options.veridaContext = null as null | Context;
     this.$options.veridaAccount = null as null | Account;
   },
   created() {
-    this.$emitter.on("veridaConnect", (vContext: Context) => {
+    this.$emitter.on("veridaConnect", async (vContext: Context) => {
       this.onVeridaContextSet(vContext);
     });
   },
   data(): IData {
     return {
-      veridaContext: null,
-      veridaAccount: null,
       did: "",
       contextName: "",
     };
@@ -62,19 +56,22 @@ export default defineComponent({
     },
 
     async onVeridaContextSet(vContext: Context) {
-      if (vContext !== null) {
+      if (vContext) {
         // console.log("enter", vContext);
         // You are free to delete this logging
         // we have the veridaContext.
+        // console.log(vContext);
         this.$options.veridaContext = vContext;
 
-        this.contextName = this.veridaContext?.getContextName();
+        this.contextName = this.$options.veridaContext.getContextName();
+
+        // console.log(this.$options.veridaContext);
 
         // this is a Verida Account object
-        this.$options.veridaAccount = this.veridaContext.getAccount();
+        this.$options.veridaAccount = this.$options.veridaContext.getAccount();
 
         // and this is how we get the DID
-        // this.did = await this.veridaAccount?.did();
+        this.did = await this.$options.veridaAccount.did();
       }
     },
   },
