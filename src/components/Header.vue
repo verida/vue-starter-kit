@@ -13,7 +13,6 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
-import VeridaClient from "@/helpers/VeridaClient";
 import store from "store";
 import * as verida from "@verida/client-ts/";
 
@@ -21,7 +20,7 @@ const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
 export default defineComponent({
   name: "Header",
-  emits: ["setDid"],
+  emits: ["onVeridaContextSet"],
   data() {
     return {
       contextName: VUE_APP_CONTEXT_NAME,
@@ -38,9 +37,7 @@ export default defineComponent({
       this.error = error;
     },
     async onSuccess(veridaContext: verida.Context) {
-      await VeridaClient.setContext(veridaContext);
-
-      this.$emit("setDid", VeridaClient.did);
+      this.$emit("onVeridaContextSet", veridaContext);
     },
   },
 });
