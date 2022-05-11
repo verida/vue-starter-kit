@@ -10,6 +10,7 @@
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { mapMutations } from "vuex";
 
 const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO, VUE_APP_LOGIN_TEXT } = process.env;
 
@@ -17,6 +18,7 @@ export default defineComponent({
   name: "Connect",
   props: {},
   components: {},
+  emits: ["setLogin"],
   data() {
     return {
       veridaContext: null,
@@ -28,9 +30,9 @@ export default defineComponent({
     };
   },
   methods: {
+    ...mapMutations(["setContext"]),
     onConnected(context: any) {
-      this.$emitter.emit("veridaConnect", context);
-
+      this.setContext(context);
       this.$router.push({ name: "Home" });
     },
 

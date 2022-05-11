@@ -22,8 +22,7 @@ import { defineComponent } from "vue";
 import { Context } from "@verida/client-ts";
 import { Account } from "@verida/account";
 import AppHeader from "@/components/Header.vue";
-
-// const { VUE_APP_CONTEXT_NAME } = process.env;
+import { mapState } from "vuex";
 
 interface IData {
   did: string;
@@ -38,12 +37,10 @@ export default defineComponent({
   mounted() {
     this.$options.veridaContext = null as null | Context;
     this.$options.veridaAccount = null as null | Account;
+
+    this.onVeridaContextSet(this.context);
   },
-  created() {
-    this.$emitter.on("veridaConnect", async (vContext: Context) => {
-      this.onVeridaContextSet(vContext);
-    });
-  },
+  computed: mapState(["context"]),
   data(): IData {
     return {
       did: "",

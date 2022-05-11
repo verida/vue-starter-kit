@@ -17,12 +17,12 @@
 		"@verida/account-web-vault": "^1.1.11",
 		"@verida/vue-account": "^0.1.33",
 		"core-js": "^3.6.5",
-		"mitt": "^3.0.0",
 		"sass": "^1.51.0",
 		"vue": "^3.0.0",
 		"vue-router": "^4.0.0-0",
 		"vue-spinner": "^1.0.4",
-		"vue-toast-notification": "^2.0.1"
+		"vue-toast-notification": "^2.0.1",
+		"vuex": "^4.0.2"
 	},
 	"devDependencies": {
 		"@types/events": "^3.0.0",

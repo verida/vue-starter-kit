@@ -1,24 +1,31 @@
 /* eslint-disable @typescript-eslint/ban-ts-comment */
 import { createApp } from "vue";
 import VueToast from "vue-toast-notification";
-import mitt, { Emitter } from "mitt";
 import App from "./App.vue";
 import router from "./router";
 import Account from "@verida/vue-account";
 
 import "vue-toast-notification/dist/theme-sugar.css";
 import "./assets/scss/main.scss";
+import { createStore } from "vuex";
 
-declare module "@vue/runtime-core" {
-  export interface ComponentCustomProperties {
-    $emitter: Emitter<any>;
-  }
-}
-const emitter = mitt();
+// Create a new store instance.
+const store = createStore({
+  state() {
+    return {
+      context: {},
+    };
+  },
+  mutations: {
+    setContext(state: any, payload: any) {
+      state.context = payload;
+    },
+  },
+});
 
 const app = createApp(App);
 
-app.config.globalProperties.$emitter = emitter;
+app.use(store);
 
 app.use(Account);
 
