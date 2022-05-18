@@ -35,6 +35,8 @@ export default defineComponent({
     AppHeader,
   },
   mounted() {
+    // veridaContext and veridaAccount cannot be set in data.
+    // The JSON schema compiler used inside them does not like running inside a Vue proxy object
     this.$options.veridaContext = null as null | Context;
     this.$options.veridaAccount = null as null | Account;
 
