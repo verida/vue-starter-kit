@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { hasSession } from "@verida/account-web-vault";
 import Credential from "../views/Home.vue";
+import SSOLogin from "../views/SSOLogin.vue";
 
 const { VUE_APP_CONTEXT_NAME } = process.env;
 
@@ -16,8 +17,7 @@ const routes: Array<RouteRecordRaw> = [
   {
     path: "/connect",
     name: "Connect",
-    component: () =>
-      import(/* webpackChunkName: "about" */ "../views/SSOLogin.vue"),
+    component: SSOLogin,
   },
 ];
 

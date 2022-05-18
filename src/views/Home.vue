@@ -1,67 +1,76 @@
 <template>
-  <app-header @veridaContextSet="onVeridaContextSet" />
+  <app-header @onVeridaContextSet="onVeridaContextSet" />
   <div style="text-align: center">
-    <h1>{{contextName}}: Home Page</h1>
-    
+    <h1>{{ contextName }}: Home Page</h1>
 
     <div>
-      This <a href="https://developers.verida.io/docs/concepts/application-contexts">application context</a> is called: <i>{{contextName}}</i>. 
-      Change this by editing the value of VUE_APP_CONTEXT_NAME in the .env file included in this project. 
+      This
+      <a href="https://developers.verida.io/docs/concepts/application-contexts"
+        >application context</a
+      >
+      is called: <i>{{ contextName }}</i
+      >. Change this by editing the value of VUE_APP_CONTEXT_NAME in the .env
+      file included in this project.
     </div>
 
-    <div>
-      You logged in with DID {{DID}}
-    </div>
-</div>
-
+    <div>You logged in with DID {{ did }}</div>
+  </div>
 </template>
 
 <script lang="ts">
 import { defineComponent } from "vue";
+import { Context } from "@verida/client-ts";
+import { Account } from "@verida/account";
 import AppHeader from "@/components/Header.vue";
-import * as verida from "@verida/client-ts/";
-import * as veridaAccountModule from "@verida/account";
+import { mapState } from "vuex";
+
+interface IData {
+  did: string;
+  contextName: string | undefined;
+}
 
 export default defineComponent({
   name: "Home",
   components: {
     AppHeader,
   },
-  data(): {
-    veridaContext: null | verida.Context;
-    veridaAccount: null | veridaAccountModule.Account;
-    DID:  null | string | undefined;
-    contextName: null | string | undefined;
-  } {
+  mounted() {
+    // veridaContext and veridaAccount cannot be set in data.
+    // The JSON schema compiler used inside them does not like running inside a Vue proxy object
+    this.$options.veridaContext = null as null | Context;
+    this.$options.veridaAccount = null as null | Account;
+
+    this.onVeridaContextSet(this.context);
+  },
+  computed: mapState(["context"]),
+  data(): IData {
     return {
-      veridaContext: null,
-      veridaAccount: null,
-      DID: null,
-      contextName: null,
+      did: "",
+      contextName: "",
     };
   },
   methods: {
-    async onVeridaContextSet(veridaContext: any) {
-      if (veridaContext != null) {
+    setDid(did: string) {
+      this.did = did;
+    },
 
+    async onVeridaContextSet(vContext: Context) {
+      if (vContext) {
+        // console.log("enter", vContext);
         // You are free to delete this logging
-        console.log("Verida Context:")
-        console.log(veridaContext)
+        // we have the veridaContext.
+        // console.log(vContext);
+        this.$options.veridaContext = vContext;
 
-        // we have the veridaContext. 
-        this.veridaContext = veridaContext;
+        this.contextName = this.$options.veridaContext.getContextName();
+
+        // console.log(this.$options.veridaContext);
 
         // this is a Verida Account object
-        this.veridaAccount = await veridaContext.account;
+        this.$options.veridaAccount = this.$options.veridaContext.getAccount();
 
         // and this is how we get the DID
-        this.DID = await this.veridaAccount?.did();
-
-        this.contextName = await this.veridaContext?.getContextName();
-      } else {
-        this.veridaContext = null;
-        this.veridaAccount = null;
-        this.DID = null;
+        this.did = await this.$options.veridaAccount.did();
       }
     },
   },

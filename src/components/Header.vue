@@ -4,9 +4,9 @@
     <vda-account
       :logo="logo"
       :contextName="contextName"
-      :onLogout="onLogout"
-      :onError="onError"
-      :onSuccess="onSuccess"
+      @onLogout="onLogout"
+      @onError="onError"
+      @onConnected="onSuccess"
     />
   </header>
 </template>
@@ -20,6 +20,7 @@ const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
 
 export default defineComponent({
   name: "Header",
+  emits: ["onVeridaContextSet"],
   data() {
     return {
       contextName: VUE_APP_CONTEXT_NAME,
@@ -35,12 +36,10 @@ export default defineComponent({
     onError(error: any) {
       this.error = error;
     },
-    onSuccess(veridaContext: verida.Context) {
-      // emit the event for the parent component to use
-      this.$emit("veridaContextSet", veridaContext)
-    }
+    async onSuccess(veridaContext: verida.Context) {
+      this.$emit("onVeridaContextSet", veridaContext);
+    },
   },
-  emits: ["veridaContextSet"]
 });
 </script>
 
