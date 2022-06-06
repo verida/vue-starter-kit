@@ -15,22 +15,21 @@
 import { defineComponent } from "vue";
 import store from "store";
 import * as verida from "@verida/client-ts/";
-
-const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO } = process.env;
+import { APP_CONTEXT_NAME, APP_LOGO } from "../constant";
 
 export default defineComponent({
   name: "Header",
   emits: ["onVeridaContextSet"],
   data() {
     return {
-      contextName: VUE_APP_CONTEXT_NAME,
-      logo: VUE_APP_LOGO,
+      contextName: APP_CONTEXT_NAME,
+      logo: APP_LOGO,
       error: null,
     };
   },
   methods: {
     async onLogout() {
-      store.remove(VUE_APP_CONTEXT_NAME);
+      store.remove(APP_CONTEXT_NAME);
       this.$router.push({ name: "Connect" });
     },
     onError(error: any) {
