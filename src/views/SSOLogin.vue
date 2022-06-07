@@ -7,12 +7,10 @@
     :loginText="loginText"
   />
 </template>
-
 <script lang="ts">
 import { defineComponent } from "vue";
 import { mapMutations } from "vuex";
-
-const { VUE_APP_CONTEXT_NAME, VUE_APP_LOGO, VUE_APP_LOGIN_TEXT } = process.env;
+import { APP_CONTEXT_NAME, APP_LOGO, APP_LOGIN_TEXT } from "../constant";
 
 export default defineComponent({
   name: "Connect",
@@ -24,9 +22,9 @@ export default defineComponent({
       veridaContext: null,
       isLoading: false,
       error: null,
-      contextName: VUE_APP_CONTEXT_NAME,
-      logo: VUE_APP_LOGO,
-      loginText: VUE_APP_LOGIN_TEXT,
+      contextName: APP_CONTEXT_NAME,
+      logo: APP_LOGO,
+      loginText: APP_LOGIN_TEXT,
     };
   },
   methods: {

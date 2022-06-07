@@ -2,8 +2,7 @@ import { createRouter, createWebHistory, RouteRecordRaw } from "vue-router";
 import { hasSession } from "@verida/account-web-vault";
 import Credential from "../views/Home.vue";
 import SSOLogin from "../views/SSOLogin.vue";
-
-const { VUE_APP_CONTEXT_NAME } = process.env;
+import { APP_CONTEXT_NAME } from "../constant";
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -28,7 +27,7 @@ const router = createRouter({
 
 router.beforeEach((to, _, next) => {
   if (to.matched.some((record) => record.meta.requiresAuth)) {
-    if (hasSession(VUE_APP_CONTEXT_NAME)) {
+    if (hasSession(APP_CONTEXT_NAME)) {
       next();
     } else {
       next("/connect");
